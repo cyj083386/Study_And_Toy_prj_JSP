@@ -1,0 +1,37 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: user
+  Date: 2023-11-02
+  Time: 오전 10:09
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+         pageEncoding="UTF-8" %>
+<html>
+<head>
+    <title>내장 객체 - request</title>
+</head>
+<body>
+  <h2>1. 클라이언트와 서버의 환경정보 읽기</h2>
+     <ul>
+         <li>데이터 전송 방식 : <%= request.getMethod() %></li>
+         <li>URL : <%= request.getRequestURL() %></li>
+         <li>URI : <%= request.getRequestURI() %></li>
+         <li>프로토콜 : <%= request.getProtocol() %></li>
+         <li>서버명 : <%= request.getServerName() %></li>
+         <li>서버포트 : <%= request.getServerPort() %></li>
+         <li>클라이언트 : <%= request.getRemoteAddr() %></li>
+         <li>쿼리스트링 : <%= request.getQueryString() %></li>
+         <li>전송된 값 1 : <%= request.getParameter("eng") %></li>
+         <li>전송된 값 2 : <%= request.getParameter("han") %></li>
+     </ul>
+      Working with server:
+      <%=application.getServerInfo() %><br/>
+
+      Servlet Specification:
+      <%=application.getMajorVersion()%>.<%= application.getMinorVersion() %><br/>
+
+      JSP version:
+      <%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %><br/>
+</body>
+</html>

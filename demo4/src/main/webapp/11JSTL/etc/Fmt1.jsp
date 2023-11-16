@@ -8,10 +8,12 @@
 </head>
 <body>
     <h4>숫자 포멧 설정</h4>
+<%-- 한글로 설정 :--%>
+<%--  <fmt:setLocale value="ko_kr" />--%>
     <c:set var="number1" value="12345"/>
     콤마 O : <fmt:formatNumber value="${ number1 }" /><br />
     콤마 X : <fmt:formatNumber value="${ number1 }" groupingUsed="false" /><br />
-    <fmt:formatNumber value="${number1 }" type="currency" var="printNum1" currencyCode="KRW"/>
+    <fmt:formatNumber value="${number1 }" type="currency" var="printNum1" currencyCode="KRW" currencySymbol="\\"/>
     통화기호 : ${printNum1} <br />
     <fmt:formatNumber value="0.03" type="percent" var="printNum2"/>
     퍼센트 : ${printNum2} <br />

@@ -51,6 +51,26 @@
         <filter-name>SetCharEncoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+<!--    &lt;!&ndash; 서블릿 매핑 1(예제 12-2) &ndash;&gt;-->
+<!--    <servlet>  &lt;!&ndash; 서블릿 등록 &ndash;&gt;-->
+<!--        <servlet-name>HelloServlet</servlet-name>-->
+<!--        <servlet-class>servlet.HelloServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>  &lt;!&ndash; 서블릿과 요청명 매핑 &ndash;&gt;-->
+<!--        <servlet-name>HelloServlet</servlet-name>-->
+<!--        <url-pattern>/12Servlet/HelloServlet.do</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+<!--    &lt;!&ndash; 서블릿 매핑 2(예제 12-8) &ndash;&gt;-->
+<!--    <servlet>  &lt;!&ndash; 서블릿 등록 &ndash;&gt;-->
+<!--        <servlet-name>DirectServletPrint</servlet-name>-->
+<!--        <servlet-class>servlet.DirectServletPrint</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>  &lt;!&ndash; 서블릿과 요청명 매핑 &ndash;&gt;-->
+<!--        <servlet-name>DirectServletPrint</servlet-name>-->
+<!--        <url-pattern>/12Servlet/DirectServletPrint.do</url-pattern>-->
+<!--    </servlet-mapping>-->
 </web-app>
 
 

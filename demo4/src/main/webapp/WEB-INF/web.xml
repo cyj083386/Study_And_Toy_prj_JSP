@@ -52,6 +52,18 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- 게시판 페이징 처리를 위한 설정값(예제 9-3) -->
+    <context-param>
+        <param-name>POSTS_PER_PAGE</param-name>
+        <param-value>10</param-value>
+    </context-param>
+    <context-param>
+        <param-name>PAGES_PER_BLOCK</param-name>
+        <param-value>5</param-value>
+    </context-param>
+
+
+
 <!--    &lt;!&ndash; 서블릿 매핑 1(예제 12-2) &ndash;&gt;-->
 <!--    <servlet>  &lt;!&ndash; 서블릿 등록 &ndash;&gt;-->
 <!--        <servlet-name>HelloServlet</servlet-name>-->

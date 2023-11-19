@@ -77,9 +77,8 @@ public class BoardDAO extends JDBConnect {
     List<BoardDTO> bbs = new Vector<BoardDTO>();  // 결과(게시물 목록)를 담을 변수
 
     // 쿼리문 템플릿
-    String query = " SET @ROWNUM :=0; "
-            + "    SELECT @ROWNUM :=@ROWNUM + 1 AS NO, Tb.* FROM ( "
-            + "        SELECT * FROM board ";
+    String query =" SELECT @ROWNUM :=@ROWNUM + 1 AS NO, Tb.* FROM ( "
+            + " SELECT * FROM board ";
 
     // 검색 조건 추가
     if (map.get("searchWord") != null) {
@@ -87,15 +86,15 @@ public class BoardDAO extends JDBConnect {
               + " LIKE '%" + map.get("searchWord") + "%' ";
     }
 
-    query += " ) tb " +
+    query += " ) tb, (SELECT @ROWNUM := 0) R " +
             " ORDER BY num DESC " +
             " LIMIT ?, 10; ";
 
     try {
       // 쿼리문 완성
       psmt = con.prepareStatement(query);
-      psmt.setString(1, map.get("start").toString());
-      psmt.setString(2, map.get("end").toString());
+      psmt.setInt(1, Integer.parseInt(String.valueOf(map.get("start"))));
+//      psmt.setString(2, map.get("end").toString());
 
       // 쿼리문 실행
       rs = psmt.executeQuery();

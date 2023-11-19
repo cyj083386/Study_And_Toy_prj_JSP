@@ -14,7 +14,7 @@
             &nbsp;&nbsp;&nbsp; <!-- 메뉴사이의 공백 확보용 특수문자 -->
             <a href="../08Board/List.jsp">게시판(페이징x)</a>
             &nbsp;&nbsp;&nbsp; <!-- 메뉴사이의 공백 확보용 특수문자 -->
-            <a href="../09Pagingboard/List.jsp">게시판(페이징o)</a>
+            <a href="../09PagingBoard/List.jsp">게시판(페이징o)</a>
         </td>
     </tr>
 </table>

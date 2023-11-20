@@ -13,8 +13,8 @@
 <body>
 
 <form method="post" action="result.jsp">
-    <input type="hidden" name="param1" value="test1.jpg" /><br>
-    <input type="hidden" name="param2" value="test2.jpg" /><br>
+    <input type="hidden" name="param1" value="test1.png" /><br>
+    <input type="hidden" name="param2" value="test2.png" /><br>
     <input type="submit" value = "이미지 다운로드">
 </form>
 </body>

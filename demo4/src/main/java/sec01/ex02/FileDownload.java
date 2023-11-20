@@ -24,7 +24,7 @@ public class FileDownload extends HttpServlet {
   public void doHandle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
     request.setCharacterEncoding("utf-8");
     response.setContentType("text/html; charset=utf-8");
-    String file_repo = "E:\\file_repo";
+    String file_repo = "d:\\file_repo";
     String fileName = (String) request.getParameter("fileName");
     System.out.println("fileName=" + fileName);
     OutputStream out = response.getOutputStream();

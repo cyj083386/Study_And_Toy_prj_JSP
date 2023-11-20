@@ -10,36 +10,90 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.Part;
+
+// common lib는 클래스 작성전에 미리 등록해야 아래와 같이 정상 import 된다.
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class FileUtil {
 
     //파일 업로드
-    public static String uploadFile(HttpServletRequest req, String sDirectory)
+    public static FileItem uploadFile(HttpServletRequest req, String sDirectory)
             throws ServletException, IOException {
-        //Part 객체를 통해 서버로 전송된 파일명 읽어오기 
-        Part part = req.getPart("ofile");
 
-        //Part 객체의 헤더값 중 content-disposition 읽어오기 
-        String partHeader = part.getHeader("content-disposition");
-        //출력결과 => form-data; name="attachedFile"; filename="파일명.jpg"
-        System.out.println("partHeader="+ partHeader);
+        req.setCharacterEncoding("utf-8");
+        String encoding = "utf-8";
+        FileItem fileItem;
 
-        //헤더값에서 파일명 잘라내기
-        String[] phArr = partHeader.split("filename=");
-        String originalFileName = phArr[1].trim().replace("\"", "");
+        File sDirectoryfile = new File(sDirectory);
+        DiskFileItemFactory factory = new DiskFileItemFactory();
+        // 파일 경로 설정
+        factory.setRepository(sDirectoryfile);
+        // 최대 업로드 가능한 파일 크기 설정
+        factory.setSizeThreshold(1024*1024);
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        try {
+            //request 객체에서 매개변수를 List로 가져옵니다.
+            List<FileItem> items = upload.parseRequest(req);
 
-        //전송된 파일이 있다면 디렉토리에 저장
-        if (!originalFileName.isEmpty()) {
-            part.write(sDirectory+ File.separator +originalFileName);
+            for(int i=0; i< items.size(); i++){
+                // 파일 업로드에서 업로드된 항목을 하나씩 가져 옵니다.
+                fileItem = items.get(i);
+                if(fileItem.isFormField()){
+                    System.out.println(fileItem.getFieldName() + "=" + fileItem.getString(encoding));
+                }else{
+                    System.out.println("파일이름: " + fileItem.getName());
+                    System.out.println("파일크기: " + fileItem.getSize() + "bytes");
+                    // 업로드한 파일 이름을 가져옵니다.
+                    if(fileItem.getSize() > 0 ){
+                        int idx = fileItem.getName().lastIndexOf(File.separator);
+                        if(idx == -1){
+                            idx = fileItem.getName().lastIndexOf("/");
+                        }
+                        String fileName = fileItem.getName().substring(idx+1);
+
+                        //전송된 파일이 있다면 디렉토리에 저장
+                        if (!fileName.isEmpty()) {
+                            // 업로드된 파일 이름으로 저장소에 파일을 업로드 합니다.
+                            File uploadFlie  = new File(sDirectoryfile+ File.separator + fileName);
+                            fileItem.write(uploadFlie);
+                        }
+                    } // end if
+                } // end if  폼 필드가 아니면 파일 업로드 기능을 수행합니다.
+            } // end for
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        //원본 파일명 반환
-        return originalFileName;
+//
+//        //Part 객체를 통해 서버로 전송된 파일명 읽어오기
+//        Part part = req.getPart("ofile");
+//
+//        //Part 객체의 헤더값 중 content-disposition 읽어오기
+//        String partHeader = part.getHeader("content-disposition");
+//        //출력결과 => form-data; name="attachedFile"; filename="파일명.jpg"
+//        System.out.println("partHeader="+ partHeader);
+//
+//        //헤더값에서 파일명 잘라내기
+//        String[] phArr = partHeader.split("filename=");
+//        String originalFileName = phArr[1].trim().replace("\"", "");
+//
+//        //전송된 파일이 있다면 디렉토리에 저장
+//        if (!originalFileName.isEmpty()) {
+//            part.write(sDirectory+ File.separator +originalFileName);
+//        }
+//
+//        //원본 파일명 반환
+//        return originalFileName;
+        return fileItem;
     }
 
     //파일명 변경

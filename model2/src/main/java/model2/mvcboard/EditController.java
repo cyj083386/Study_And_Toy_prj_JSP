@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
 import utils.JSFunction;
 
 @WebServlet("/mvcboard/edit.do")
@@ -38,7 +40,7 @@ public class EditController extends HttpServlet {
         String saveDirectory = req.getServletContext().getRealPath("/Uploads");
       
         // 파일 업로드
-        String originalFileName = "";
+        FileItem originalFileName;
         try {
         	originalFileName = FileUtil.uploadFile(req, saveDirectory);
         }

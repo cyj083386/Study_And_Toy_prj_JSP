@@ -2,6 +2,7 @@ package model2.mvcboard;
 
 import java.io.IOException;
 
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import fileupload.FileUtil;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -9,13 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
 import utils.JSFunction;
+import com.oreilly.servlet.MultipartRequest;
+
 
 @WebServlet("/mvcboard/write.do")
-@MultipartConfig(
-        maxFileSize = 1024 * 1024 * 1,
-        maxRequestSize = 1024 * 1024 * 10
-)
+
 public class WriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -31,11 +33,11 @@ public class WriteController extends HttpServlet {
         // 1. 파일 업로드 처리 =============================
         // 업로드 디렉터리의 물리적 경로 확인
         String saveDirectory = req.getServletContext().getRealPath("/Uploads");
-                
+
         // 파일 업로드
-        String originalFileName = "";
+        FileItem fileItem;
         try {
-        	originalFileName = FileUtil.uploadFile(req, saveDirectory);
+            fileItem = FileUtil.uploadFile(req, saveDirectory);
         }
         catch (Exception e) {
         	JSFunction.alertLocation(resp, "파일 업로드 오류입니다.",
@@ -45,18 +47,19 @@ public class WriteController extends HttpServlet {
 
         // 2. 파일 업로드 외 처리 =============================
         // 폼값을 DTO에 저장
-        MVCBoardDTO dto = new MVCBoardDTO(); 
-        dto.setName(req.getParameter("name"));
-        dto.setTitle(req.getParameter("title"));
-        dto.setContent(req.getParameter("content"));
-        dto.setPass(req.getParameter("pass"));
+        MVCBoardDTO dto = new MVCBoardDTO();
+
+        dto.setName(fileItem.getParameter("name"));
+        dto.setTitle(multi.getParameter("title"));
+        dto.setContent(multi.getParameter("content"));
+        dto.setPass(multi.getParameter("pass"));
 
         // 원본 파일명과 저장된 파일 이름 설정
-        if (!originalFileName.isEmpty()) {
+        if (!fileItem.getName().isEmpty()) {
         	// 파일명 변경
-        	String savedFileName = FileUtil.renameFile(saveDirectory, originalFileName);
+        	String savedFileName = FileUtil.renameFile(saveDirectory, fileItem);
 
-            dto.setOfile(originalFileName);  // 원래 파일 이름
+            dto.setOfile(fileItem);  // 원래 파일 이름
             dto.setSfile(savedFileName);  // 서버에 저장된 파일 이름
         }
 

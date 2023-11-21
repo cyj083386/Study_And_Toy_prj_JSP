@@ -76,6 +76,21 @@ public class BoardDAO extends JDBConnect {
   public List<BoardDTO> selectListPage(Map<String, Object> map) {
     List<BoardDTO> bbs = new Vector<BoardDTO>();  // 결과(게시물 목록)를 담을 변수
 
+
+    // 쿼리문 템플릿
+    String query =" SELECT tb.* FROM ( "
+            + " SELECT * FROM board ";
+
+    // 검색 조건 추가
+    if (map.get("searchWord") != null) {
+      query += " WHERE " + map.get("searchField")
+              + " LIKE '%" + map.get("searchWord") + "%' ";
+    }
+
+    query += " ) tb " +
+            " ORDER BY num DESC " +
+            " LIMIT ?, 10; ";
+    /*
     // 쿼리문 템플릿
     String query =" SELECT @ROWNUM :=@ROWNUM + 1 AS NO, Tb.* FROM ( "
             + " SELECT * FROM board ";
@@ -89,7 +104,7 @@ public class BoardDAO extends JDBConnect {
     query += " ) tb, (SELECT @ROWNUM := 0) R " +
             " ORDER BY num DESC " +
             " LIMIT ?, 10; ";
-
+    */
     try {
       // 쿼리문 완성
       psmt = con.prepareStatement(query);

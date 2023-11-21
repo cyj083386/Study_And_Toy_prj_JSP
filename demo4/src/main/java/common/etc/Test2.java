@@ -1,4 +1,4 @@
-package etc;
+package common.etc;
 
 import java.util.StringTokenizer;
 

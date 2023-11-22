@@ -21,6 +21,6 @@ public class DownloadController extends HttpServlet {
 
         FileUtil.download(req, resp, "/Uploads", sfile, ofile);
         MVCBoardDAO dao = new MVCBoardDAO();
-        dao.downCoundPlus(idx);
+        dao.downCountPlus(idx);
     }
 }

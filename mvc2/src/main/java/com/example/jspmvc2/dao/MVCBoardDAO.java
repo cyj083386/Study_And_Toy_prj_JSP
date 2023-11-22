@@ -71,7 +71,7 @@ public class MVCBoardDAO {
         sqlSession.close();
     }
 
-    public void downCoundPlus(String idx) {
+    public void downCountPlus(String idx) {
         SqlSession sqlSession = MyBatisSessionFactory.getSqlSession();
         MVCBoardMapper mapper = sqlSession.getMapper(MVCBoardMapper.class);
         int result = mapper.downCountPlus(idx);
